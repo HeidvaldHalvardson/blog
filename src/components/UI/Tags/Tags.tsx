@@ -1,16 +1,18 @@
-import React from 'react';
-import styles from './Tag.module.scss'
+import React from 'react'
+import styles from './Tags.module.scss'
 
-type TTagProps = {
-  children: string
+type TTagsProps = {
+  tags: string[]
 }
 
-const Tag: React.FC<TTagProps> = ({ children }) => {
+const Tags: React.FC<TTagsProps> = ({ tags }) => {
   return (
-    <div className={styles.tag}>
-      {children}
+    <div className={styles.tags}>
+      {tags.map((tag) => {
+        return <span className={styles.tag}>{`Tag ${tag}`}</span>
+      })}
     </div>
-  );
-};
+  )
+}
 
-export default Tag;
+export default Tags;

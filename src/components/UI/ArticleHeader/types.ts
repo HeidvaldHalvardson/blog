@@ -1,4 +1,4 @@
-export type TArticleHeader = {
+export interface IArticleHeader {
   title: string
   isLiked: boolean
   likes: number

@@ -1,14 +1,8 @@
 import React from 'react'
 import styles from './Buttons.module.scss'
+import {IButtonProps} from "./types";
 
-type TButtonProps = {
-  type?: 'green' | 'red' | 'black' | 'blue'
-  size?: 'small'
-  children: string
-  onClick: React.MouseEventHandler<HTMLButtonElement>
-}
-
-const Button: React.FC<TButtonProps> = ({ children, size, type, onClick }) => {
+const Button: React.FC<IButtonProps> = ({ children, size, type, onClick }) => {
 
   const typeStyle = type ? styles[type] : null
   const sizeStyle = size ? styles[size] : styles.large

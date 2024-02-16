@@ -1,11 +1,15 @@
-import React from 'react';
+import React from 'react'
+import styles from './App.module.scss'
+import Header from "../Header/Header";
+import ArticleList from "../ArticleList/ArticleList";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div>
-
+    <div className={styles.app}>
+      <Header />
+      <ArticleList />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

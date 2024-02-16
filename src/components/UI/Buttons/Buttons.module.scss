@@ -1,0 +1,23 @@
+.button {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  box-sizing: border-box;
+}
+
+.green {
+  border-radius: 5px;
+  border: 1px solid #52c41a;
+
+  color: #52c41a;
+}
+
+.large {
+  padding: 14px 21px;
+  font-size: 18px;
+}
+
+.small {
+  padding: 5px 10px;
+  font-size: 14px;
+}

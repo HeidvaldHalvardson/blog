@@ -1,14 +1,19 @@
 .header {
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   background-color: #ffffff;
+  margin-bottom: 25px;
 }
 
 .inner {
-  height: 80px;
+  min-height: 80px;
   max-width: 1440px;
   margin: 0 auto;
   padding: 16px 22px 13px;
   box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title {
