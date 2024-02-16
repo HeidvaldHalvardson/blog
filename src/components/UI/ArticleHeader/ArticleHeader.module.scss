@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+
+  & h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 13px;
+
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 140%;
+    color: #1890ff;
+  }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+
+  margin-bottom: 10px;
+}
+
+.likes {
+  font-size: 12px;
+  line-height: 0;
+  margin-left: 5px;
+}
