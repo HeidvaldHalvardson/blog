@@ -1,8 +1,9 @@
 import React from 'react'
-import { ConfigProvider, Pagination as P } from "antd";
-import { IPagination } from "./types";
+import { ConfigProvider, Pagination as P } from 'antd'
 
-const Pagination: React.FC<IPagination> = ({ total, pageSize= 5, onChange, current }) => {
+import { IPagination } from './types'
+
+const Pagination: React.FC<IPagination> = ({ total, pageSize = 5, onChange, current }) => {
   return (
     <ConfigProvider
       theme={{
@@ -26,4 +27,4 @@ const Pagination: React.FC<IPagination> = ({ total, pageSize= 5, onChange, curre
   )
 }
 
-export default Pagination;
+export default Pagination

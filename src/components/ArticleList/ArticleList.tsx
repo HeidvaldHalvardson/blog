@@ -1,24 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react'
+
+import Pagination from '../UI/Pagination/Pagination'
+import ArticleHeader from '../ArticleHeader/ArticleHeader'
+import ErrorMessage from '../UI/ErrorMessage/ErrorMessage'
+import Spinner from '../UI/Spinner/Spinner'
+import { useFetchArticlesListQuery } from '../../services/ArticlesService'
+
 import styles from './ArticleList.module.scss'
-import ArticleItem from "./ArticleItem/ArticleItem";
-import Pagination from "../UI/Pagination/Pagination";
 
 const ArticleList: React.FC = () => {
-  const arr = [1,2,3,4,5]
-  const total = 50
+  const [page, setPage] = useState(1)
+  const { isLoading, isError, data } = useFetchArticlesListQuery(
+    { page },
+    {
+      refetchOnFocus: true,
+    }
+  )
+
+  const listView =
+    !isLoading && !isError && data ? (
+      <>
+        <ul className={styles.list}>
+          {data.articles.map(
+            ({
+              slug,
+              favorited,
+              favoritesCount,
+              title,
+              tagList,
+              description,
+              createdAt,
+              author: { image, username },
+            }) => {
+              return (
+                <li className={styles.li} key={slug}>
+                  <ArticleHeader
+                    slug={slug}
+                    isLiked={favorited}
+                    likes={favoritesCount}
+                    title={title}
+                    tags={tagList}
+                    desc={description}
+                    image={image}
+                    name={username}
+                    createdAt={createdAt}
+                  />
+                </li>
+              )
+            }
+          )}
+        </ul>
+        <Pagination total={data.articlesCount} current={page} pageSize={5} onChange={(page) => setPage(page)} />
+      </>
+    ) : null
+
   return (
     <section className={styles.page}>
       <h1 className="visually-hidden">Articles List</h1>
-      <ul className={styles.list}>
-        {
-          arr.map((item) => {
-            return <ArticleItem />
-          })
-        }
-      </ul>
-      <Pagination total={total} current={1} pageSize={5} onChange={() => console.log('page changed')} />
+      {isLoading ? <Spinner /> : null}
+      {isError && !isLoading && !data ? (
+        <ErrorMessage message={'Something is wrong! Please refresh this page...'} />
+      ) : null}
+      {listView}
     </section>
-  );
-};
+  )
+}
 
-export default ArticleList;
+export default ArticleList

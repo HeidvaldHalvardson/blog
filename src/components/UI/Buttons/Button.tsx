@@ -1,9 +1,9 @@
 import React from 'react'
+
 import styles from './Buttons.module.scss'
-import {IButtonProps} from "./types";
+import { IButtonProps } from './types'
 
 const Button: React.FC<IButtonProps> = ({ children, size, type, onClick }) => {
-
   const typeStyle = type ? styles[type] : null
   const sizeStyle = size ? styles[size] : styles.large
   const classes = `${styles.button} ${typeStyle} ${sizeStyle}`
