@@ -1,46 +1,63 @@
-# Getting Started with Create React App
+# Блог-платформа (React)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://blog-lake-pi-87.vercel.app
 
-## Available Scripts
+### Проект использует технологии:
+* React
+* Typescript
+* Redux
+* Redux Toolkit
+* RTK query
 
-In the project directory, you can run:
+#### API: https://bump.sh/gerome-grignon-lp2/doc/realworld (Корневой URL для API: https://blog.kata.academy/api/)
+#### Макет: https://www.figma.com/file/XXBjJXew3xpfbOZUnO9QVB/Blog?node-id=9582%3A0
 
-### `npm start`
+## Cтраница со списком статей:
+Пагинация реализована с использованием Ant Design - React UI framework. 
+Пагинация статей на стороне сервера - при смене страницы отправляем новый запрос. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Страница одной статьи. 
+Полный текст статьи - это Markdown разметка (реализоваана с использованием markdown-to-jsx).
+Используйте react-router для навигации по страницам.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Навигация по сайту:
 
-### `npm test`
+**/** и **/articles** - список всех статей. 
+При клике на заголовок - переход на страницу статьи.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**/articles/{slug}** - Просмотр статьи с полным текстом.
 
-### `npm run build`
+**/articles/{slug}/edit** - страница редактирования статьи.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**/new-article** - страница создания статьи. При переходе по этой ссылке без аутентификации - перебрасывает на страницу логина.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**/sign-in** - страница входа.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**/sign-up** - страница регистрации.
 
-### `npm run eject`
+**/profile** - страница редактирования информации пользователя. Переход на эту страницу происходит по клике на имени-аватарке в шапке.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Валидация:
+Для клиентской валидации форм использована библиотека React Hook Form.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Регистрация (все поля обязательны):
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* email должен быть корректным почтовым адресом
+* username должен быть от 3 до 20 символов (включительно)
+* password должен быть от 6 до 40 символов (включительно)
+* password и repeat password должны совпадать
+* галочка согласия с обработкой персональных данных должна быть отмечена
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### Логин:
 
-## Learn More
+* email должен быть не пустой, должен быть корректным почтовым адресом
+* password должен быть не пустой
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Редактирование профиля:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* username не должен быть пустым
+* email должен быть корректным почтовым адресом, не должен быть пустым
+* new password должен быть от 6 до 40 символом
+* avatar image должен быть корректным url
+* Серверные ошибки должны нормально подсвечивать соответствующие поля.
+
