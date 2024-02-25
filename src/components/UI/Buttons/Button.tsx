@@ -1,7 +1,7 @@
 import React from 'react'
 
 import styles from './Buttons.module.scss'
-import { IButtonProps } from './types'
+import { IButtonProps } from './interface'
 
 const Button: React.FC<IButtonProps> = ({ children, size, type, onClick }) => {
   const typeStyle = type ? styles[type] : null
