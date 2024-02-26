@@ -7,25 +7,44 @@ import CustomInputForm from '../UI/CustomInputForm/CustomInputForm'
 import ErrorMessageValidation from '../UI/ErrorMessage/ErrorMessageValidation'
 import CustomLink from '../../UI/CustomLink/CustomLink'
 import { getOptions } from '../UI/options'
-import { isFetchBaseQueryErrorType, useCreateUserMutation } from '../../../services/AuthenticationService'
+import { isFetchBaseQueryErrorType, useCreateUserMutation } from '../../../services/AuthorizationService'
+import { setAuthUser } from '../../../reducers/authSlice'
+import { useAppDispatch } from '../../../store/hooks'
 
 import styles from './SignUp.module.scss'
 
 const SignUp: React.FC = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const dispatch = useAppDispatch()
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
     setError,
+    clearErrors,
   } = useForm<FieldValues>({
     mode: 'onChange',
   })
 
-  const navigate = useNavigate()
-  const location = useLocation()
+  const [createUser, { error, isSuccess, data }] = useCreateUserMutation()
 
-  const [createUser, { error, isSuccess }] = useCreateUserMutation()
+  useEffect(() => {
+    if (isSuccess && data) {
+      dispatch(
+        setAuthUser({
+          username: data.user.username,
+          email: data.user.email,
+          token: data.user.token,
+          image: data.user.image,
+        })
+      )
+      location.state?.from ? navigate(location.state.from) : navigate('/articles')
+      clearErrors()
+    }
+  }, [isSuccess, data])
 
   useEffect(() => {
     if (error && isFetchBaseQueryErrorType(error)) {
@@ -36,21 +55,8 @@ const SignUp: React.FC = () => {
     }
   }, [error])
 
-  useEffect(() => {
-    if (isSuccess) {
-      location.state?.from ? navigate(location.state.from) : navigate('/articles')
-    }
-  }, [isSuccess])
-
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const newUser = {
-      user: {
-        username: data.username,
-        email: data.email,
-        password: data.password,
-      },
-    }
-    await createUser(newUser)
+  const onSubmit: SubmitHandler<FieldValues> = async (dataForm) => {
+    await createUser({ user: { email: dataForm.email, password: dataForm.password, username: dataForm.username } })
   }
 
   return (

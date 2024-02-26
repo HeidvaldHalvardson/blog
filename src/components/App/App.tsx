@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Routes, Navigate } from 'react-router-dom'
 
 import Layout from '../Layout/Layout'
@@ -8,10 +8,21 @@ import Article from '../Article/Article'
 import SignIn from '../Forms/SignIn/SignIn'
 import SignUp from '../Forms/SignUp/SignUp'
 import Profile from '../Forms/Profile/Profile'
+import { useAppDispatch } from '../../store/hooks'
+import { setAuthUser } from '../../reducers/authSlice'
 
 import styles from './App.module.scss'
 
 const App: React.FC = () => {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      const user = JSON.parse(localStorage.getItem('user') || '{}')
+      dispatch(setAuthUser(user.user))
+    }
+  }, [])
+
   return (
     <div className={styles.app}>
       <Routes>

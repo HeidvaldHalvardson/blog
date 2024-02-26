@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { IArticlesList } from '../types/IArticlesList'
-import { IArticle, IArticleResponse } from '../types/IArticle'
+import { IArticlesList } from '../interfaces/IArticlesList'
+import { IArticle, IArticleResponse } from '../interfaces/IArticle'
 
 interface IArticleParams {
   page: number
