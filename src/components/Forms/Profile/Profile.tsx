@@ -32,6 +32,7 @@ const Profile: React.FC = () => {
       username: user.username,
       image: user.image,
       email: user.email,
+      password: user.password,
     },
   })
 
