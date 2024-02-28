@@ -13,6 +13,11 @@ import { useAppDispatch } from '../../../store/hooks'
 
 import styles from './SignIn.module.scss'
 
+type FormValues = {
+  email: string
+  password: string
+}
+
 const SignIn: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
@@ -26,8 +31,12 @@ const SignIn: React.FC = () => {
     formState: { errors },
     setError,
     clearErrors,
-  } = useForm<FieldValues>({
+  } = useForm<FormValues>({
     mode: 'onChange',
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   })
 
   const [loginUser, { error, isSuccess, data }] = useLoginUserMutation()
@@ -36,7 +45,9 @@ const SignIn: React.FC = () => {
     if (error && isFetchBaseQueryErrorType(error)) {
       const serverMessages = JSON.parse(JSON.stringify(error.data))
       for (const key in serverMessages.errors) {
-        setError(key, { message: serverMessages.errors[key] })
+        if (key === 'email' || key === 'password') {
+          setError(key, { message: serverMessages.errors[key] })
+        }
       }
       messageApi.open({ type: 'error', content: `Email or Password ${serverMessages.errors['email or password']}` })
       clearErrors()

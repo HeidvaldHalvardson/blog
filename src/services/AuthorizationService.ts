@@ -1,7 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 import { IUser } from '../interfaces/IUser'
+
+import { BaseQuery } from './BaseQuery'
 
 interface IAuthRequest {
   user: {
@@ -22,17 +24,7 @@ export const isFetchBaseQueryErrorType = (error: any): error is FetchBaseQueryEr
 
 export const authAPI = createApi({
   reducerPath: 'authAPI',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://blog.kata.academy/api/',
-    prepareHeaders: (headers) => {
-      if (localStorage.getItem('user')) {
-        const user = JSON.parse(localStorage.getItem('user') || '{}')
-        headers.set('Authorization', `Token ${user.user.token}`)
-      }
-
-      headers.set('Content-Type', 'application/json')
-    },
-  }),
+  baseQuery: BaseQuery,
   endpoints: (build) => ({
     createUser: build.mutation<IAuthResponse, Partial<IAuthRequest>>({
       query: (body) => ({

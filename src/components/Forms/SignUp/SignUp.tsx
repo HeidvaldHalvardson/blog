@@ -13,6 +13,14 @@ import { useAppDispatch } from '../../../store/hooks'
 
 import styles from './SignUp.module.scss'
 
+type FormValues = {
+  username: string
+  email: string
+  password: string
+  confirmPassword: string
+  agreement: boolean
+}
+
 const SignUp: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
@@ -25,8 +33,15 @@ const SignUp: React.FC = () => {
     watch,
     setError,
     clearErrors,
-  } = useForm<FieldValues>({
+  } = useForm<FormValues>({
     mode: 'onChange',
+    defaultValues: {
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      agreement: false,
+    },
   })
 
   const [createUser, { error, isSuccess, data }] = useCreateUserMutation()
@@ -50,7 +65,9 @@ const SignUp: React.FC = () => {
     if (error && isFetchBaseQueryErrorType(error)) {
       const serverMessages = JSON.parse(JSON.stringify(error.data))
       for (const key in serverMessages.errors) {
-        setError(key, { message: serverMessages.errors[key] })
+        if (key === 'username' || key === 'email' || key === 'password' || key === 'confirmPassword') {
+          setError(key, { message: serverMessages.errors[key] })
+        }
       }
     }
   }, [error])
@@ -58,6 +75,8 @@ const SignUp: React.FC = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (dataForm) => {
     await createUser({ user: { email: dataForm.email, password: dataForm.password, username: dataForm.username } })
   }
+
+  const passwordWatch = watch('password')
 
   return (
     <div className={styles.wrapper}>
@@ -94,7 +113,7 @@ const SignUp: React.FC = () => {
           label="Repeat Password"
           register={register}
           errors={errors}
-          options={getOptions(watch).confirmPassword}
+          options={getOptions(passwordWatch).confirmPassword}
           placeholder="Password"
           name="confirmPassword"
           type="password"

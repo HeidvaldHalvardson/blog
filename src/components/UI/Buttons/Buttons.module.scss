@@ -5,6 +5,11 @@
   box-sizing: border-box;
 }
 
+.large {
+  padding: 14px 21px;
+  font-size: 18px;
+}
+
 .green {
   border-radius: 5px;
   border: 1px solid #52c41a;
@@ -12,17 +17,23 @@
   color: #52c41a;
 }
 
-.blue {
+.blue,
+.red {
   border-radius: 4px;
-  padding: 8px 16px;
+  padding: 8px 36px;
 
-  background-color: #1890ff;
-  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
 }
 
-.large {
-  padding: 14px 21px;
-  font-size: 18px;
+.blue {
+  border: 1px solid #1890ff;
+  color: #1890ff;
+}
+
+.red {
+  border: 1px solid #f5222d;
+  color: #f5222d;
 }
 
 .small {

@@ -8,6 +8,8 @@ import Article from '../Article/Article'
 import SignIn from '../Forms/SignIn/SignIn'
 import SignUp from '../Forms/SignUp/SignUp'
 import Profile from '../Forms/Profile/Profile'
+import ArticleForm from '../Forms/ArticleForm/ArticleForm'
+import PrivateRoute from '../UI/PrivateRoute/PrivateRoute'
 import { useAppDispatch } from '../../store/hooks'
 import { setAuthUser } from '../../reducers/authSlice'
 
@@ -33,6 +35,9 @@ const App: React.FC = () => {
           <Route path={'sign-in'} element={<SignIn />} />
           <Route path={'sign-up'} element={<SignUp />} />
           <Route path={'profile'} element={<Profile />} />
+          <Route element={<PrivateRoute />}>
+            <Route path={'new-article'} element={<ArticleForm />} />
+          </Route>
           <Route path={'*'} element={<IsNotFound />} />
         </Route>
       </Routes>
