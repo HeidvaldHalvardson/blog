@@ -31,6 +31,7 @@ const Article: React.FC = () => {
     favoritesCount,
     description,
     createdAt,
+    slug,
     author: { username, image },
   } = data
 
@@ -48,6 +49,7 @@ const Article: React.FC = () => {
           createdAt={createdAt}
           image={image}
           desc={description}
+          slug={slug}
         />
       )}
       <div className={styles.body}>{body && <Markdown>{body}</Markdown>}</div>

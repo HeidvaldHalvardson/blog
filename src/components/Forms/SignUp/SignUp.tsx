@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { SubmitHandler, useForm, FieldValues } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import FormButton from '../UI/FormButton/FormButton'
@@ -72,7 +72,7 @@ const SignUp: React.FC = () => {
     }
   }, [error])
 
-  const onSubmit: SubmitHandler<FieldValues> = async (dataForm) => {
+  const onSubmit: SubmitHandler<FormValues> = async (dataForm) => {
     await createUser({ user: { email: dataForm.email, password: dataForm.password, username: dataForm.username } })
   }
 

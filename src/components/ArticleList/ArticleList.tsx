@@ -10,12 +10,7 @@ import styles from './ArticleList.module.scss'
 
 const ArticleList: React.FC = () => {
   const [page, setPage] = useState(1)
-  const { isLoading, isError, data } = useFetchArticlesListQuery(
-    { page },
-    {
-      refetchOnFocus: true,
-    }
-  )
+  const { isLoading, isError, data } = useFetchArticlesListQuery({ page })
 
   const listView =
     !isLoading && !isError && data ? (

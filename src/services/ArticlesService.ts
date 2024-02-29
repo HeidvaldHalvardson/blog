@@ -10,12 +10,13 @@ interface IArticleParams {
   limit?: number
 }
 
-interface INewArticleRequest {
+interface IArticleRequest {
   article: {
     title: string
     description: string
     body: string
-    tags?: string[]
+    tagList?: string[]
+    slug?: string
   }
 }
 
@@ -23,6 +24,7 @@ export const articlesAPI = createApi({
   reducerPath: 'articlesAPI',
   refetchOnFocus: true,
   baseQuery: BaseQuery,
+  tagTypes: ['Article'],
   endpoints: (build) => ({
     fetchArticlesList: build.query<IArticlesList, IArticleParams>({
       query: ({ page, limit = 5 }) => ({
@@ -32,21 +34,48 @@ export const articlesAPI = createApi({
           offset: (page - 1) * limit,
         },
       }),
+      providesTags: () => ['Article'],
     }),
     fetchArticle: build.query<IArticle, string>({
       query: (slug) => ({
         url: `articles/${slug}`,
       }),
       transformResponse: (response: IArticleResponse) => response.article,
+      providesTags: () => ['Article'],
     }),
-    createNewArticle: build.mutation<IArticleResponse, Partial<INewArticleRequest>>({
+    createNewArticle: build.mutation<IArticleResponse, IArticleRequest>({
       query: (body) => ({
         url: 'articles',
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Article'],
+    }),
+    editArticle: build.mutation<IArticleResponse, IArticleRequest>({
+      query: (body) => {
+        const { article } = body
+        return {
+          url: `articles/${article.slug}`,
+          method: 'PUT',
+          body,
+        }
+      },
+      invalidatesTags: ['Article'],
+    }),
+    deleteArticle: build.mutation<IArticleResponse, string>({
+      query: (slug) => ({
+        url: `articles/${slug}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Article'],
     }),
   }),
 })
 
-export const { useFetchArticlesListQuery, useFetchArticleQuery, useCreateNewArticleMutation } = articlesAPI
+export const {
+  useFetchArticlesListQuery,
+  useFetchArticleQuery,
+  useCreateNewArticleMutation,
+  useEditArticleMutation,
+  useDeleteArticleMutation,
+} = articlesAPI

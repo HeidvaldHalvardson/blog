@@ -9,7 +9,7 @@ const Button: React.FC<IButtonProps> = ({ children, size, type, onClick }) => {
   const classes = `${styles.button} ${typeStyle} ${sizeStyle}`
 
   return (
-    <button className={classes} onClick={onClick}>
+    <button className={classes} onClick={onClick} type="button">
       {children}
     </button>
   )

@@ -37,6 +37,7 @@ const App: React.FC = () => {
           <Route path={'profile'} element={<Profile />} />
           <Route element={<PrivateRoute />}>
             <Route path={'new-article'} element={<ArticleForm />} />
+            <Route path={'/articles/:param/edit'} element={<ArticleForm />} />
           </Route>
           <Route path={'*'} element={<IsNotFound />} />
         </Route>

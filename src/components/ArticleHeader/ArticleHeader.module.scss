@@ -1,18 +1,28 @@
 .header {
+  display: grid;
+  grid-template-columns: 680px auto;
   min-height: 140px;
   padding: 15px 16px;
   box-sizing: border-box;
 }
 
-.wrapper {
-  display: flex;
-  justify-content: space-between;
+//.wrapper {
+//  display: flex;
+//  justify-content: space-between;
+//
+//  &:first-child {
+//    margin-bottom: 7px;
+//  }
+//}
 
-  margin-bottom: 7px;
+.left {
+  width: 680px;
+  overflow-wrap: break-word;
+  line-height: 183%;
 }
 
-.block {
-  width: 680px;
+.right {
+  margin-left: auto;
 }
 
 .title {
@@ -73,8 +83,8 @@
   border-radius: 50%;
 }
 
-.desc {
-  width: 680px;
-  overflow-wrap: break-word;
-  line-height: 183%;
+.buttons {
+  height: 30px;
+  display: flex;
+  gap: 12px;
 }

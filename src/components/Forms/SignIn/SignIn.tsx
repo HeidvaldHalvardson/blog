@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { message } from 'antd'
 
@@ -68,7 +68,7 @@ const SignIn: React.FC = () => {
     }
   }, [isSuccess, data])
 
-  const onSubmit: SubmitHandler<FieldValues> = async (dataForm) => {
+  const onSubmit: SubmitHandler<FormValues> = async (dataForm) => {
     await loginUser({ user: { email: dataForm.email, password: dataForm.password } })
   }
 
