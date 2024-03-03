@@ -31,7 +31,7 @@ const ArticleList: React.FC = () => {
                 <li className={styles.li} key={slug}>
                   <ArticleHeader
                     slug={slug}
-                    isLiked={favorited}
+                    favorited={favorited}
                     likes={favoritesCount}
                     title={title}
                     tags={tagList}

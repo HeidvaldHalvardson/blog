@@ -1,9 +1,7 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
-
 import { IArticlesList } from '../interfaces/IArticlesList'
 import { IArticle, IArticleResponse } from '../interfaces/IArticle'
 
-import { BaseQuery } from './BaseQuery'
+import { baseApi } from './baseAPI'
 
 interface IArticleParams {
   page: number
@@ -20,11 +18,7 @@ interface IArticleRequest {
   }
 }
 
-export const articlesAPI = createApi({
-  reducerPath: 'articlesAPI',
-  refetchOnFocus: true,
-  baseQuery: BaseQuery,
-  tagTypes: ['Article'],
+export const articlesAPI = baseApi.injectEndpoints({
   endpoints: (build) => ({
     fetchArticlesList: build.query<IArticlesList, IArticleParams>({
       query: ({ page, limit = 5 }) => ({

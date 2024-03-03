@@ -1,9 +1,8 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 import { IUser } from '../interfaces/IUser'
 
-import { BaseQuery } from './BaseQuery'
+import { baseApi } from './baseAPI'
 
 interface IAuthRequest {
   user: {
@@ -22,9 +21,7 @@ export interface IAuthResponse {
 export const isFetchBaseQueryErrorType = (error: any): error is FetchBaseQueryError =>
   typeof error === 'object' && error != null && 'status' in error
 
-export const authAPI = createApi({
-  reducerPath: 'authAPI',
-  baseQuery: BaseQuery,
+export const authAPI = baseApi.injectEndpoints({
   endpoints: (build) => ({
     createUser: build.mutation<IAuthResponse, Partial<IAuthRequest>>({
       query: (body) => ({
@@ -39,6 +36,7 @@ export const authAPI = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Article'],
     }),
     editUser: build.mutation<IAuthResponse, Partial<IAuthRequest>>({
       query: (body) => ({

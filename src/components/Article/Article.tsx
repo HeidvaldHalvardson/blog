@@ -32,7 +32,7 @@ const Article: React.FC = () => {
     description,
     createdAt,
     slug,
-    author: { username, image, following },
+    author: { username, image },
   } = data
 
   return (
@@ -42,7 +42,7 @@ const Article: React.FC = () => {
       {!isLoading && !isError && (
         <ArticleHeader
           title={title}
-          isLiked={favorited}
+          favorited={favorited}
           likes={favoritesCount}
           tags={tagList}
           name={username}

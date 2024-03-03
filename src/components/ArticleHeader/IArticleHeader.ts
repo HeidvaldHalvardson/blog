@@ -1,7 +1,7 @@
 export interface IArticleHeader {
   slug: string
   title: string
-  isLiked: boolean
+  favorited: boolean
   likes: number
   tags: string[]
   name: string

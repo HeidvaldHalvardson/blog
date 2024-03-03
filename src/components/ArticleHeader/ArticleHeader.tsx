@@ -20,7 +20,7 @@ import styles from './ArticleHeader.module.scss'
 
 const ArticleHeader: React.FC<IArticleHeader> = ({
   title,
-  isLiked,
+  favorited,
   likes,
   tags,
   name,
@@ -50,14 +50,6 @@ const ArticleHeader: React.FC<IArticleHeader> = ({
   }, [token])
 
   const isOneArticle = location.pathname === '/articles'
-
-  // const toggleFollow = () => {
-  //   if (isLiked) {
-  //     followArticle(slug)
-  //   }
-  //   unfollowArcticle(slug)
-  // }
-
   const confirm = () => {
     deleteArticle(slug)
     navigate('/articles')
@@ -66,6 +58,24 @@ const ArticleHeader: React.FC<IArticleHeader> = ({
   const editHandler = () => {
     navigate('edit')
   }
+
+  const toggleFavorited = favorited ? (
+    <div onClick={() => unfollowArticle(slug)}>
+      <HeartOn />
+    </div>
+  ) : (
+    <div onClick={() => followArticle(slug)}>
+      <HeartOff />
+    </div>
+  )
+
+  const likesView = token ? (
+    toggleFavorited
+  ) : (
+    <div>
+      <HeartOff />
+    </div>
+  )
 
   return (
     <div className={styles.header}>
@@ -78,15 +88,7 @@ const ArticleHeader: React.FC<IArticleHeader> = ({
           ) : (
             <h3 className={styles.title}>{title}</h3>
           )}
-          {isLiked ? (
-            <div onClick={() => unfollowArticle(slug)}>
-              <HeartOn />
-            </div>
-          ) : (
-            <div onClick={() => followArticle(slug)}>
-              <HeartOff />
-            </div>
-          )}
+          {likesView}
           <span className={styles.likes}>{likes}</span>
         </div>
         <Tags tags={tags} />
