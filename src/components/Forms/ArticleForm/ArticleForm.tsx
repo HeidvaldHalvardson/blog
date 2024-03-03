@@ -162,14 +162,14 @@ const ArticleForm: React.FC = () => {
                   />
                 </div>
                 {fields.length !== 1 ? (
-                  <Button type="red" onClick={() => remove(id)}>
+                  <Button color="red" onClick={() => remove(id)}>
                     Delete
                   </Button>
                 ) : (
-                  <Button type="red">Delete</Button>
+                  <Button color="red">Delete</Button>
                 )}
                 {id === fields.length - 1 && (
-                  <Button type="blue" onClick={() => append({ tag: '' })}>
+                  <Button color="blue" onClick={() => append({ tag: '' })}>
                     Add Tag
                   </Button>
                 )}

@@ -17,7 +17,7 @@ const Authorized: React.FC = () => {
   return (
     <>
       <CustomLink to="new-article">
-        <Button type="green" size="small">
+        <Button color="green" size="small">
           Create article
         </Button>
       </CustomLink>
@@ -31,7 +31,7 @@ const Authorized: React.FC = () => {
           />
         </div>
       </CustomLink>
-      <Button type="black" onClick={() => handleLogout()}>
+      <Button color="black" onClick={() => handleLogout()}>
         Log Out
       </Button>
     </>

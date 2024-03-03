@@ -69,6 +69,20 @@ export const articlesAPI = createApi({
       }),
       invalidatesTags: ['Article'],
     }),
+    followArticle: build.mutation<IArticleResponse, string>({
+      query: (slug) => ({
+        url: `/articles/${slug}/favorite`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Article'],
+    }),
+    unfollowArticle: build.mutation<IArticleResponse, string>({
+      query: (slug) => ({
+        url: `/articles/${slug}/favorite`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Article'],
+    }),
   }),
 })
 
@@ -78,4 +92,6 @@ export const {
   useCreateNewArticleMutation,
   useEditArticleMutation,
   useDeleteArticleMutation,
+  useFollowArticleMutation,
+  useUnfollowArticleMutation,
 } = articlesAPI

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import FormButton from '../UI/FormButton/FormButton'
 import CustomInputForm from '../UI/CustomInputForm/CustomInputForm'
@@ -23,7 +23,6 @@ type FormValues = {
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate()
-  const location = useLocation()
   const dispatch = useAppDispatch()
 
   const {
@@ -56,7 +55,7 @@ const SignUp: React.FC = () => {
           image: data.user.image,
         })
       )
-      location.state?.from ? navigate(location.state.from) : navigate('/articles')
+      navigate('/articles')
       clearErrors()
     }
   }, [isSuccess, data])

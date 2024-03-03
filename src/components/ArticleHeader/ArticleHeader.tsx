@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { format } from 'date-fns'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { Popconfirm } from 'antd'
 
-import { useDeleteArticleMutation } from '../../services/ArticlesService'
+import {
+  useDeleteArticleMutation,
+  useFollowArticleMutation,
+  useUnfollowArticleMutation,
+} from '../../services/ArticlesService'
+import { useAppSelector } from '../../store/hooks'
 import CustomLink from '../UI/CustomLink/CustomLink'
 import HeartOff from '../UI/Hearts/HeartOff'
 import HeartOn from '../UI/Hearts/HeartOn'
@@ -23,25 +29,42 @@ const ArticleHeader: React.FC<IArticleHeader> = ({
   desc,
   slug,
 }) => {
-  const navigator = useNavigate()
+  const navigate = useNavigate()
   const location = useLocation()
+  const {
+    user: { token },
+  } = useAppSelector((state) => state.authReducer)
 
   const [deleteArticle] = useDeleteArticleMutation()
+  const [followArticle] = useFollowArticleMutation()
+  const [unfollowArticle] = useUnfollowArticleMutation()
 
   const createdDate = format(new Date(createdAt), 'MMMM d, yyyy')
 
   const authUser = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user') || '{}').user.username
 
-  const isEditMode = name === authUser
+  let isEditMode = name === authUser
+
+  useEffect(() => {
+    isEditMode = name === authUser
+  }, [token])
+
   const isOneArticle = location.pathname === '/articles'
 
-  const deleteHandler = () => {
+  // const toggleFollow = () => {
+  //   if (isLiked) {
+  //     followArticle(slug)
+  //   }
+  //   unfollowArcticle(slug)
+  // }
+
+  const confirm = () => {
     deleteArticle(slug)
-    navigator('/articles')
+    navigate('/articles')
   }
 
   const editHandler = () => {
-    navigator('edit')
+    navigate('edit')
   }
 
   return (
@@ -55,7 +78,15 @@ const ArticleHeader: React.FC<IArticleHeader> = ({
           ) : (
             <h3 className={styles.title}>{title}</h3>
           )}
-          {isLiked ? <HeartOn /> : <HeartOff />}
+          {isLiked ? (
+            <div onClick={() => unfollowArticle(slug)}>
+              <HeartOn />
+            </div>
+          ) : (
+            <div onClick={() => followArticle(slug)}>
+              <HeartOff />
+            </div>
+          )}
           <span className={styles.likes}>{likes}</span>
         </div>
         <Tags tags={tags} />
@@ -70,10 +101,18 @@ const ArticleHeader: React.FC<IArticleHeader> = ({
       <div className={styles.left}>{desc}</div>
       {!isOneArticle && isEditMode ? (
         <div className={`${styles.buttons} ${styles.right}`}>
-          <Button type="red" size="small" onClick={() => deleteHandler()}>
-            Delete
-          </Button>
-          <Button type="green" size="small" onClick={() => editHandler()}>
+          <Popconfirm
+            title=""
+            description="Are you sure to delete this article?"
+            onConfirm={confirm}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button color="red" size="small">
+              Delete
+            </Button>
+          </Popconfirm>
+          <Button color="green" size="small" onClick={() => editHandler()}>
             Edit
           </Button>
         </div>

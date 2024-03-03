@@ -10,7 +10,7 @@ const NotAuthorized: React.FC = () => {
         <Button>Sign In</Button>
       </CustomLink>
       <CustomLink to={'sign-up'}>
-        <Button type="green">Sign Up</Button>
+        <Button color="green">Sign Up</Button>
       </CustomLink>
     </>
   )

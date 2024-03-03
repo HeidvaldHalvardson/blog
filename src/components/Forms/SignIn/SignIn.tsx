@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { message } from 'antd'
 
 import CustomInputForm from '../UI/CustomInputForm/CustomInputForm'
@@ -20,7 +20,6 @@ type FormValues = {
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate()
-  const location = useLocation()
   const dispatch = useAppDispatch()
 
   const [messageApi, contextHolder] = message.useMessage()
@@ -64,7 +63,7 @@ const SignIn: React.FC = () => {
           image: data.user.image,
         })
       )
-      location.state?.from ? navigate(location.state.from) : navigate('/articles')
+      navigate(-1)
     }
   }, [isSuccess, data])
 

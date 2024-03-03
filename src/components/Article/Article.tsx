@@ -32,7 +32,7 @@ const Article: React.FC = () => {
     description,
     createdAt,
     slug,
-    author: { username, image },
+    author: { username, image, following },
   } = data
 
   return (
